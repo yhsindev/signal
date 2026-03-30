@@ -10,7 +10,7 @@
 
 每天湧入的科技新聞裡，大多數內容是同一件事的不同包裝——從一份財報、一個工程 Blog、一場法說會，輾轉被翻譯、摘要、再摘要，等到抵達你面前時，決策者的原始邏輯早已消失在層層轉述裡。
 
-Signal 訊源從另一個方向出發：直接讀第一手資料，記錄自己的判斷，追蹤真正值得長期關注的主題。它不是聚合器，不是 RSS reader，而是一個讓你沉澱思考的個人情報工作台。
+Signal 訊源從另一個方向出發：直接讀第一手資料，記錄自己的判斷，追蹤真正值得長期關注的主題。它自動從你信任的來源抓取新文章、用 Claude 快速過濾值不值得深讀，但最終的判斷永遠是你的——它是一個讓你沉澱思考的個人情報工作台。
 
 這個工具背後的問題意識，來自一個簡單卻很少被正面回答的問題：
 
@@ -78,13 +78,20 @@ signal/
 ├── src/
 │   ├── components/       # UI 元件
 │   ├── pages/
-│   │   ├── Reading/      # 閱讀清單 + Claude 摘要
+│   │   ├── Reading/
+│   │   │   ├── index.tsx          # 閱讀清單主頁
+│   │   │   ├── ArticleCard.tsx    # 文章卡片（標題、來源、摘要狀態）
+│   │   │   ├── ArticleDetail.tsx  # 文章詳情 + 個人觀點記錄
+│   │   │   └── AddArticleModal.tsx # 手動貼 URL 新增
 │   │   ├── Topics/       # 主題追蹤地圖
 │   │   ├── Sources/      # 來源管理
 │   │   └── Position/     # 工程師定位分析
 │   ├── stores/           # Zustand 狀態管理
 │   ├── services/
-│   │   └── claude.ts     # Claude API 摘要服務
+│   │   ├── claude.ts     # Claude API 摘要服務
+│   │   └── rss.ts        # RSS 抓取服務
+│   ├── types/
+│   │   └── article.ts    # Article / DigestStatus 型別
 │   └── data/
 │       └── sources.json  # 預設來源清單
 ├── README.md
@@ -102,7 +109,7 @@ signal/
 | Phase | 內容 | 週期 |
 |-------|------|------|
 | Phase 1 | 基礎架構、頁面 Layout、來源清單 | 第 1 週 |
-| Phase 2 | 閱讀清單 + Claude 自動摘要 + 個人觀點記錄 | 第 1–2 週 |
+| Phase 2 | RSS 自動抓取 + 手動貼 URL + Claude 摘要與判斷 + 個人觀點記錄 | 第 1–2 週 |
 | Phase 3 | 主題追蹤地圖（跨文章聚合） | 第 2–3 週 |
 | Phase 4 | 工程師定位分析模組 | 第 3–4 週 |
 
