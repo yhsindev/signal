@@ -19,6 +19,7 @@ export interface Source {
   url: string
   category: Category
   description: string
+  rssUrl?: string   // RSS feed URL，有填才能自動抓取
 }
 
 interface SourcesState {

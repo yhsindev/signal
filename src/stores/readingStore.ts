@@ -1,29 +1,67 @@
 import { create } from 'zustand'
+import { persist } from 'zustand/middleware'
 import type { Article, DigestStatus } from '../types/article'
 
 interface ReadingState {
   articles: Article[]
-
-  // 新增
   addArticle: (article: Omit<Article, 'id' | 'addedAt'>) => void
-
-  // 更新 Claude 摘要結果
-  setSummary: (id: string, summary: string, worthReading: boolean) => void
-
-  // 更新個人觀點 → 自動推進 status 到 'digested'
+  addArticles: (articles: Omit<Article, 'id' | 'addedAt'>[]) => void  // RSS 批次新增，自動去重
+  setSummary: (id: string, summary: string, worthReading: boolean, reason: string) => void
   setPerspective: (id: string, perspective: string) => void
-
-  // 手動更新消化狀態
   setStatus: (id: string, status: DigestStatus) => void
-
-  // 篩選用（不存入 store，computed）
-  // filtered by status: useReadingStore(state => state.articles.filter(...))
+  removeArticle: (id: string) => void
 }
 
-export const useReadingStore = create<ReadingState>()(() => ({
-  articles: [],
-  addArticle: () => {},
-  setSummary: () => {},
-  setPerspective: () => {},
-  setStatus: () => {},
-}))
+export const useReadingStore = create<ReadingState>()(
+  persist(
+    (set) => ({
+      articles: [],
+
+      addArticle: (article) =>
+        set((state) => {
+          if (state.articles.some((a) => a.url === article.url)) return state
+          return {
+            articles: [
+              { ...article, id: crypto.randomUUID(), addedAt: new Date().toISOString() },
+              ...state.articles,
+            ],
+          }
+        }),
+
+      addArticles: (incoming) =>
+        set((state) => {
+          const existingUrls = new Set(state.articles.map((a) => a.url))
+          const newOnes = incoming
+            .filter((a) => !existingUrls.has(a.url))
+            .map((a) => ({ ...a, id: crypto.randomUUID(), addedAt: new Date().toISOString() }))
+          if (newOnes.length === 0) return state
+          return { articles: [...newOnes, ...state.articles] }
+        }),
+
+      setSummary: (id, summary, worthReading, reason) =>
+        set((state) => ({
+          articles: state.articles.map((a) =>
+            a.id === id
+              ? { ...a, summary, worthReading, worthReadingReason: reason, status: 'pending' }
+              : a,
+          ),
+        })),
+
+      setPerspective: (id, perspective) =>
+        set((state) => ({
+          articles: state.articles.map((a) =>
+            a.id === id ? { ...a, perspective, status: 'digested' } : a,
+          ),
+        })),
+
+      setStatus: (id, status) =>
+        set((state) => ({
+          articles: state.articles.map((a) => (a.id === id ? { ...a, status } : a)),
+        })),
+
+      removeArticle: (id) =>
+        set((state) => ({ articles: state.articles.filter((a) => a.id !== id) })),
+    }),
+    { name: 'signal-reading' },
+  ),
+)

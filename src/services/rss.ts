@@ -1,14 +1,40 @@
 import type { Article } from '../types/article'
 
-// Phase 2: 從來源的 RSS feed 抓取最新文章
-// 因為瀏覽器的 CORS 限制，需要透過公開的 RSS-to-JSON proxy（如 rss2json.com）
-// 或考慮改用 Cloudflare Workers 自架 proxy
+const WORKER_URL = import.meta.env.VITE_WORKER_URL ?? ''
 
-export async function fetchRssFeed(_sourceId: string, _rssUrl: string): Promise<Omit<Article, 'id' | 'addedAt' | 'summary' | 'worthReading' | 'perspective' | 'status'>[]> {
-  throw new Error('Not implemented')
+interface RssItem {
+  title: string
+  url: string
+  publishedAt: string
 }
 
-export async function fetchPageTitle(_url: string): Promise<string> {
-  // Phase 2: 手動貼 URL 時自動抓取頁面 og:title
-  throw new Error('Not implemented')
+export async function fetchRssFeed(
+  sourceId: string,
+  sourceName: string,
+  rssUrl: string,
+): Promise<Omit<Article, 'id' | 'addedAt'>[]> {
+  const res = await fetch(`${WORKER_URL}/rss?url=${encodeURIComponent(rssUrl)}`)
+  if (!res.ok) throw new Error(`RSS fetch failed: ${res.status}`)
+
+  const items: RssItem[] = await res.json()
+  return items.map((item) => ({
+    url: item.url,
+    title: item.title,
+    sourceId,
+    sourceName,
+    publishedAt: item.publishedAt,
+    summary: '',
+    worthReading: null,
+    worthReadingReason: '',
+    perspective: '',
+    status: 'unread' as const,
+    fromRss: true,
+  }))
+}
+
+export async function fetchPageTitle(url: string): Promise<string> {
+  const res = await fetch(`${WORKER_URL}/title?url=${encodeURIComponent(url)}`)
+  if (!res.ok) throw new Error(`Title fetch failed: ${res.status}`)
+  const { title } = await res.json()
+  return title as string
 }

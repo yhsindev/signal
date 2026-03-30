@@ -1,0 +1,6 @@
+name = "signal-worker"
+main = "src/index.ts"
+compatibility_date = "2024-09-23"
+
+# 部署後將 URL 填入前端 .env.local 的 VITE_WORKER_URL
+# 格式：https://signal-worker.<your-subdomain>.workers.dev

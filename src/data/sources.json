@@ -1,16 +1,16 @@
 [
-  { "id": "stratechery", "name": "Stratechery", "url": "https://stratechery.com", "category": "深度分析", "description": "科技業商業策略最權威分析" },
-  { "id": "semianalysis", "name": "SemiAnalysis", "url": "https://www.semianalysis.com", "category": "深度分析", "description": "GPU / HBM / 供應鏈最深挖（Dylan Patel）" },
-  { "id": "acquired", "name": "Acquired Podcast", "url": "https://www.acquired.fm", "category": "深度分析", "description": "企業深度歷史，每集 4–6 小時" },
+  { "id": "stratechery", "name": "Stratechery", "url": "https://stratechery.com", "category": "深度分析", "description": "科技業商業策略最權威分析", "rssUrl": "https://stratechery.com/feed/" },
+  { "id": "semianalysis", "name": "SemiAnalysis", "url": "https://www.semianalysis.com", "category": "深度分析", "description": "GPU / HBM / 供應鏈最深挖（Dylan Patel）", "rssUrl": "https://www.semianalysis.com/feed" },
+  { "id": "acquired", "name": "Acquired Podcast", "url": "https://www.acquired.fm", "category": "深度分析", "description": "企業深度歷史，每集 4–6 小時", "rssUrl": "https://feeds.simplecast.com/4MvgQ73R" },
   { "id": "nvidia-ir", "name": "NVIDIA IR", "url": "https://investor.nvidia.com", "category": "財報一手", "description": "Earnings call transcript" },
   { "id": "microsoft-ir", "name": "Microsoft IR", "url": "https://www.microsoft.com/en-us/investor", "category": "財報一手", "description": "Earnings call transcript" },
   { "id": "google-ir", "name": "Google IR", "url": "https://abc.xyz/investor", "category": "財報一手", "description": "Earnings call transcript" },
-  { "id": "lwn", "name": "LWN.net", "url": "https://lwn.net", "category": "工程技術", "description": "Linux 核心最權威報導" },
-  { "id": "cloudflare-blog", "name": "Cloudflare Blog", "url": "https://blog.cloudflare.com", "category": "工程技術", "description": "系統工程事故分析一手資料" },
-  { "id": "acm-queue", "name": "ACM Queue", "url": "https://queue.acm.org", "category": "工程技術", "description": "系統工程實務深度文章" },
+  { "id": "lwn", "name": "LWN.net", "url": "https://lwn.net", "category": "工程技術", "description": "Linux 核心最權威報導", "rssUrl": "https://lwn.net/headlines/rss" },
+  { "id": "cloudflare-blog", "name": "Cloudflare Blog", "url": "https://blog.cloudflare.com", "category": "工程技術", "description": "系統工程事故分析一手資料", "rssUrl": "https://blog.cloudflare.com/rss/" },
+  { "id": "acm-queue", "name": "ACM Queue", "url": "https://queue.acm.org", "category": "工程技術", "description": "系統工程實務深度文章", "rssUrl": "https://queue.acm.org/rss/feeds/rssqueue.xml" },
   { "id": "digitimes", "name": "DIGITIMES", "url": "https://www.digitimes.com", "category": "半導體", "description": "台灣供應鏈視角" },
   { "id": "techinsights", "name": "TechInsights", "url": "https://www.techinsights.com", "category": "半導體", "description": "晶片分析與競爭情報" },
-  { "id": "dwarkesh", "name": "Dwarkesh Podcast", "url": "https://www.dwarkeshpatel.com", "category": "影片/Podcast", "description": "AI 創辦人最深度訪談" },
+  { "id": "dwarkesh", "name": "Dwarkesh Podcast", "url": "https://www.dwarkeshpatel.com", "category": "影片/Podcast", "description": "AI 創辦人最深度訪談", "rssUrl": "https://feeds.transistor.fm/the-lunar-society" },
   { "id": "guts4tech", "name": "GUTS4Tech", "url": "https://www.youtube.com/@GUTS4Tech", "category": "影片/Podcast", "description": "系統軟體與產業分析（jserv）" },
-  { "id": "arxiv-cs-os", "name": "arXiv CS.OS", "url": "https://arxiv.org/list/cs.OS/recent", "category": "研究論文", "description": "系統軟體最新研究" }
+  { "id": "arxiv-cs-os", "name": "arXiv CS.OS", "url": "https://arxiv.org/list/cs.OS/recent", "category": "研究論文", "description": "系統軟體最新研究", "rssUrl": "https://arxiv.org/rss/cs.OS" }
 ]
